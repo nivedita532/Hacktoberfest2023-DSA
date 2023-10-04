@@ -1,0 +1,29 @@
+vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+       vector<int>visited(V,false);
+       vector<int>dist(V,INT_MAX);
+       dist[S]=0;
+       
+       priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+       pq.push({0,S});
+       
+       while(!pq.empty()){
+           int mdist=pq.top().first;
+           int cur_node=pq.top().second;
+           pq.pop();
+           
+           visited[cur_node]=true;
+           
+           for(vector<int> nbrp:adj[cur_node]){
+        
+               int nbr=nbrp[0];
+               int weight=nbrp[1];
+               
+               if(weight+mdist<dist[nbr]){
+                   dist[nbr]=weight+mdist;
+                   pq.push({dist[nbr],nbr});
+               }
+           }
+       }
+       return dist;
+    }
